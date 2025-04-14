@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 
 swift format --recursive --in-place .
-
