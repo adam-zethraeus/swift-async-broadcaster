@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e -u -o pipefail
+
+cd "$(dirname "$0")"
+
+ROOT=$(git rev-parse --show-toplevel)
+
+swift format format -i -r --configuration "${ROOT}/.swift-format.json" "${ROOT}"
