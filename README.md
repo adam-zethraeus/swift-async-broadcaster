@@ -3,7 +3,7 @@
 Broadcasting/Multicasting for Swift's AsyncSequences
 
 Swift's `AsyncSequence` protocol backs the `for await value in stream { /* ... */ }` syntax.
-This is an execllent pattern with an inexplicable flaw: multiple subscribers are unsupported by default.
+This is a nice pattern with an annoying constraint: multiple subscribers are unsupported by default.
 It's up to the author of the async sequence's data source to ensure each consumer receives its own `AsyncIteratorProtocol` to iterate on — and neither the Swift language nor the official AsyncAlgorithms package provide operators which 'broadcast' an existing AsyncSequence.
 
 Async sequences created with `AsyncStream.makeStream(of:)` or with any of the operators from AsyncAlgorithms **can not emit to multiple subscribers**.
@@ -18,6 +18,8 @@ Instance of `AsyncBroadcaster`, whether created directly or through a call to `.
   - `.none`: No replay
   - `.latest(n)`: Replay up to n most recent values
   - `.unbounded`: Replay all historical values
+
+(As of v `0.0.1` this is a buffering, not a backpressure, based system.)
 
 ## Installation
 
