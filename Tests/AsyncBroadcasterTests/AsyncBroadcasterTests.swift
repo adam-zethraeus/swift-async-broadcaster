@@ -6,7 +6,7 @@ import Testing
 @Suite struct SubjectTests {
 
   @Test func testBasic() async throws {
-    let stream = [1, 2, 3].async.broadcast()
+      let stream = [1, 2, 3].async.broadcast(replay: .latest(3))
     let one = Task {
       var result: [Int] = []
       for await i in stream {
@@ -14,7 +14,7 @@ import Testing
       }
       return result
     }
-
+      try await Task.sleep(for: .milliseconds(10))
     await #expect(one.value == [1, 2, 3])
 
   }
@@ -245,6 +245,7 @@ import Testing
     subject.continuation.finish()
 
     let task = Task {
+    try? await Task.sleep(for: .milliseconds(10))
       var results: [Int] = []
 
       for await value in subject.stream {
